@@ -25,7 +25,7 @@ Mini-Task-Manager/
 │   ├── inventory.ini
 │   ├── playbook.yml
 │   └── roles/
-│       └── k8s\_deploy/
+│       └── k8s_deploy/
 │           ├── tasks/main.yml
 │           └── handlers/main.yml
 │
