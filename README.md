@@ -1,4 +1,4 @@
-# Mini-Task-Manager
+# Mini Task Manager
 Mini Task Manager – A simple web application to manage daily tasks with create, read, update, and delete (CRUD) functionality.
 
 ---
@@ -35,7 +35,7 @@ Mini-Task-Manager/
 
 ---
 
-# Mini Task Manager – Phase 1: Backend + Database Setup
+# Phase 1: Backend + Database Setup
 
 ### What was done
 
@@ -144,7 +144,7 @@ POSTGRES_DB=tasksdb
 
 ---
 
-# Mini Task Manager – Phase 2: Kubernetes Deployment
+# Phase 2: Kubernetes Deployment
 
 This phase focuses on deploying the backend and database from Phase 1 into a **Kubernetes cluster**, using Deployments, Services, ConfigMaps, Secrets, and Persistent Volume Claims (PVCs).
 
@@ -298,7 +298,7 @@ Output:
 
 ---
 
-# Mini Task Manager – Phase 3: Ansible Automation
+#  Phase 3: Ansible Automation
 
 ## Overview
 In this phase, we automated the deployment of the **Mini Task Manager** application to Kubernetes using **Ansible**.  
