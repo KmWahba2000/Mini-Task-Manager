@@ -1,0 +1,20 @@
+---
+- name: Apply secrets
+  command: kubectl apply -f ../k8s/secret.yml
+  notify: Check pods
+
+- name: Apply configmap
+  command: kubectl apply -f ../k8s/configmap.yml
+  notify: Check pods
+
+- name: Apply database deployment and service
+  command: kubectl apply -f ../k8s/postgres-db.yml
+  notify: Check pods
+
+- name: Apply backend deployment and service
+  command: kubectl apply -f ../k8s/backend.yml
+  notify: Check pods
+
+- name: Apply ingress
+  command: kubectl apply -f ../k8s/ingress.yml
+  notify: Check pods

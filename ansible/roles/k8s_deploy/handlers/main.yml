@@ -1,0 +1,7 @@
+- name: Check pods
+  command: kubectl get pods
+  register: pod_status
+  changed_when: false
+
+- debug:
+    var: pod_status.stdout_lines
