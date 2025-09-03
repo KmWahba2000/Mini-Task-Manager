@@ -8,38 +8,56 @@ Mini Task Manager – A simple web application to manage daily tasks with create
 ```
 Mini-Task-Manager/
 │
-├── backend/                    # Flask API code
+├── backend/
 │   ├── app.py
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── docker-compose.yml          # Local dev setup
+├── docker-compose.yml
 │
-├── k8s/                        # Kubernetes manifests
+├── k8s/
 │   ├── backend-deployment.yml
 │   ├── backend-service.yml
 │   ├── db-deployment.yml
 │   └── db-service.yml
 │
-├── ansible/                     # Ansible automation
+├── ansible/
 │   ├── inventory.ini
-│   └── playbooks/
-│       ├── setup.yml
-│       └── deploy.yml
+│   ├── playbook.yml
+│   └── roles/
+│       └── k8s\_deploy/
+│           ├── tasks/main.yml
+│           └── handlers/main.yml
 │
-├── Jenkinsfile                  # CI/CD pipeline
-└── README.md                    # Project overview & phases
+├── Jenkinsfile 
+└── README.md
 ```
 
 ---
 
-# Phase 1 – Backend + Database Setup
+# Mini Task Manager – Phase 1: Backend + Database Setup
 
 ### What was done
 
 * Added a **PostgreSQL database** container (`postgres-db`) with persistent volume.
 * Created a **Flask backend** (`backend`) with basic CRUD endpoints.
 * Used **Docker Compose** to orchestrate both services.
+
+---
+
+## Folder Structure
+
+```
+Mini-Task-Manager/
+│
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── docker-compose.yml
+└── ...
+````
 
 ---
 
@@ -126,27 +144,13 @@ POSTGRES_DB=tasksdb
 
 ---
 
-
-
-# Mini Task Manager – Phase 2 (Kubernetes Deployment)
+# Mini Task Manager – Phase 2: Kubernetes Deployment
 
 This phase focuses on deploying the backend and database from Phase 1 into a **Kubernetes cluster**, using Deployments, Services, ConfigMaps, Secrets, and Persistent Volume Claims (PVCs).
 
 ---
 
-## What was done
-
-- Migrated the **Flask backend** and **PostgreSQL database** to Kubernetes.
-- Created **Deployments** for backend and Postgres to ensure scalability and manage pods.
-- Exposed services internally using **ClusterIP** (Postgres) and **NodePort** (Backend) for development access.
-- Configured **ConfigMap** for environment variables like `FLASK_ENV` and `DEBUG`.
-- Created a **Secret** for database credentials.
-- Added **PersistentVolumeClaim** to store Postgres data persistently across pod restarts.
-- Ensured backend can communicate with database via service names.
-
-> ✅ The backend pod is running and connected to the database.  
-> ✅ CRUD operations from Phase 1 work successfully inside the cluster.  
-> ✅ Tested API endpoints via NodePort.
+## Folder Structure
 
 ---
 
@@ -163,6 +167,22 @@ Mini-Task-Manager/
 │   └── secret.yml
 └── README.md
 ````
+
+---
+
+## What was done
+
+- Migrated the **Flask backend** and **PostgreSQL database** to Kubernetes.
+- Created **Deployments** for backend and Postgres to ensure scalability and manage pods.
+- Exposed services internally using **ClusterIP** (Postgres) and **NodePort** (Backend) for development access.
+- Configured **ConfigMap** for environment variables like `FLASK_ENV` and `DEBUG`.
+- Created a **Secret** for database credentials.
+- Added **PersistentVolumeClaim** to store Postgres data persistently across pod restarts.
+- Ensured backend can communicate with database via service names.
+
+> ✅ The backend pod is running and connected to the database.  
+> ✅ CRUD operations from Phase 1 work successfully inside the cluster.  
+> ✅ Tested API endpoints via NodePort.
 
 ---
 
@@ -277,3 +297,100 @@ Output:
 * All Phase 1 functionality (CRUD operations) works seamlessly in the Kubernetes environment.
 
 ---
+
+# Mini Task Manager – Phase 3: Ansible Automation
+
+## Overview
+In this phase, we automated the deployment of the **Mini Task Manager** application to Kubernetes using **Ansible**.  
+The goal is to simplify the process of applying Kubernetes manifests and validating that the cluster is running as expected, with minimal manual steps.
+
+---
+
+## Folder Structure
+```
+
+Mini-Task-Manager/
+│
+├── ansible/
+│   ├── inventory.ini
+│   ├── playbook.yml
+│   └── roles/
+│       └── k8s_deploy/
+│           ├── tasks/main.yml
+│           └── handlers/main.yml
+└── ...
+
+````
+
+---
+
+## How It Works
+- **Inventory**  
+  Defines the target hosts for Ansible (in this case, `localhost` running Minikube).
+
+- **Playbook**  
+  Executes the `k8s_deploy` role to apply Kubernetes resources.
+
+- **Tasks**  
+  - Apply Secrets  
+  - Apply ConfigMap  
+  - Apply Database Deployment & Service  
+  - Apply Backend Deployment & Service  
+  - Apply Ingress (optional)  
+
+- **Handlers**  
+  - Run `kubectl get pods` to validate that Pods are running after resources are applied.
+
+---
+
+## Running the Playbook
+1. Navigate to the `ansible/` directory:
+   ```bash
+   cd ansible/
+````
+
+2. Run the playbook:
+
+   ```bash
+   ansible-playbook -i inventory.ini playbook.yml
+   ```
+
+---
+
+## Expected Output
+
+* Ansible will apply all Kubernetes manifests in the `../k8s/` folder.
+* After changes, the handler will check the Pods’ status.
+* Example Output:
+
+  ```
+  PLAY RECAP *********************************************************************
+  127.0.0.1 : ok=7  changed=5  unreachable=0  failed=0  skipped=0  rescued=0  ignored=0
+  ```
+
+---
+
+## Verification
+
+You can confirm that everything is deployed correctly by running:
+
+```bash
+kubectl get all
+```
+
+Check a specific Pod:
+
+```bash
+kubectl describe pod <pod-name>
+```
+
+---
+
+
+
+
+
+
+
+
+
