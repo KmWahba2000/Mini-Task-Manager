@@ -5,6 +5,7 @@ Mini Task Manager – A simple web application to manage daily tasks with create
 
 ## Folder Structure
 
+---
 Mini-Task-Manager/
 │
 ├── backend/                    # Flask API code
@@ -28,6 +29,7 @@ Mini-Task-Manager/
 │
 ├── Jenkinsfile                  # CI/CD pipeline
 └── README.md                    # Project overview & phases
+---
 
 ---
 
