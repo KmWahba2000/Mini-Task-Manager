@@ -126,6 +126,8 @@ POSTGRES_DB=tasksdb
 
 ---
 
+
+
 # Mini Task Manager – Phase 2 (Kubernetes Deployment)
 
 This phase focuses on deploying the backend and database from Phase 1 into a **Kubernetes cluster**, using Deployments, Services, ConfigMaps, Secrets, and Persistent Volume Claims (PVCs).
