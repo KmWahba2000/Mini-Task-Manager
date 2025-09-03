@@ -345,15 +345,16 @@ Mini-Task-Manager/
 
 ## Running the Playbook
 1. Navigate to the `ansible/` directory:
-   ```bash
-   cd ansible/
+
+```bash
+cd ansible/
 ````
 
 2. Run the playbook:
 
-   ```bash
-   ansible-playbook -i inventory.ini playbook.yml
-   ```
+```bash
+ansible-playbook -i inventory.ini playbook.yml
+```
 
 ---
 
@@ -363,10 +364,10 @@ Mini-Task-Manager/
 * After changes, the handler will check the Pods’ status.
 * Example Output:
 
-  ```
-  PLAY RECAP *********************************************************************
-  127.0.0.1 : ok=7  changed=5  unreachable=0  failed=0  skipped=0  rescued=0  ignored=0
-  ```
+```
+PLAY RECAP *********************************************************************
+127.0.0.1 : ok=7  changed=5  unreachable=0  failed=0  skipped=0  rescued=0  ignored=0
+```
 
 ---
 
