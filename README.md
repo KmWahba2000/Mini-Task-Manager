@@ -1,5 +1,18 @@
 # Mini Task Manager
-Mini Task Manager – A simple web application to manage daily tasks with create, read, update, and delete (CRUD) functionality.
+
+A lightweight **Task Management Application** designed to demonstrate a full DevOps workflow.  
+This project combines **development, containerization, orchestration, automation, and CI/CD**, showcasing practical deployment of a microservice.
+
+> Users can create, list, and delete tasks via a simple REST API, while the system is deployed and managed with modern DevOps practices.
+
+The project is structured in **phases**, each focusing on a different aspect:
+
+- **Phase 1 – Local Development:** Dockerized backend with PostgreSQL.  
+- **Phase 2 – Kubernetes Deployment:** Deploy backend and database to a cluster with ConfigMaps, Secrets, and Services.  
+- **Phase 3 – Automation:** Ansible playbooks to automate deployment and environment verification.  
+- **Phase 4 – CI/CD:** Jenkins pipeline for automated builds, tests, and deployment.
+
+Each phase builds upon the previous one, creating a fully functional, deployable application with a production-like workflow.
 
 ---
 
@@ -37,11 +50,15 @@ Mini-Task-Manager/
 
 # Phase 1: Backend + Database Setup
 
-### What was done
+**Objective:** Containerize the backend and database for local development.  
+**What was done:**
+- Dockerized **Flask backend** for task management.
+- Added **PostgreSQL container** with persistent storage.
+- Configured **Docker Compose** to orchestrate backend + database.
+- Used environment variables via `.env` for configuration.
 
-* Added a **PostgreSQL database** container (`postgres-db`) with persistent volume.
-* Created a **Flask backend** (`backend`) with basic CRUD endpoints.
-* Used **Docker Compose** to orchestrate both services.
+**Outcome:**  
+A fully functional local setup where tasks can be managed via API. This phase ensures the application runs consistently across different machines.
 
 ---
 
@@ -146,7 +163,16 @@ POSTGRES_DB=tasksdb
 
 # Phase 2: Kubernetes Deployment
 
-This phase focuses on deploying the backend and database from Phase 1 into a **Kubernetes cluster**, using Deployments, Services, ConfigMaps, Secrets, and Persistent Volume Claims (PVCs).
+**Objective:** Deploy the application to a Kubernetes cluster.  
+**What was done:**
+- Created **Deployments** for backend and database.
+- Exposed services using **ClusterIP**.
+- Added **ConfigMap** for environment variables.
+- Added **Secrets** for sensitive data like DB credentials.
+- (Optional) Configured **Ingress** for external access.
+
+**Outcome:**  
+Application is running in a cluster, demonstrating orchestration, scalability, and separation of concerns. This phase builds upon Phase 1 and mimics a production-like environment.
 
 ---
 
@@ -300,15 +326,20 @@ Output:
 
 #  Phase 3: Ansible Automation
 
-## Overview
-In this phase, we automated the deployment of the **Mini Task Manager** application to Kubernetes using **Ansible**.  
-The goal is to simplify the process of applying Kubernetes manifests and validating that the cluster is running as expected, with minimal manual steps.
+**Objective:** Automate deployment and environment verification.  
+**What was done:**
+- Created **Ansible roles** for backend and database deployment.
+- Ensured resources exist and are running, without reapplying unchanged configs.
+- Used **handlers** to react to changes and manage Kubernetes resources.
+- Collected key logs and verified the application health.
+
+**Outcome:**  
+Deployment can now be automated on any host with minimal manual intervention. This phase integrates with Phases 1 & 2 for reproducible deployments.
 
 ---
 
 ## Folder Structure
 ```
-
 Mini-Task-Manager/
 │
 ├── ansible/
@@ -319,7 +350,6 @@ Mini-Task-Manager/
 │           ├── tasks/main.yml
 │           └── handlers/main.yml
 └── ...
-
 ````
 
 ---
@@ -386,12 +416,3 @@ kubectl describe pod <pod-name>
 ```
 
 ---
-
-
-
-
-
-
-
-
-
