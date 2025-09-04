@@ -220,7 +220,7 @@ Mini-Task-Manager/
 kubectl apply -f k8s/db_Persistent_Volume.yml
 kubectl apply -f k8s/secret.yml
 kubectl apply -f k8s/backend.yml
-kubectl apply -f k8s/db.yml
+kubectl apply -f k8s/postgres-db.yml
 kubectl apply -f k8s/ingress.yml
 ````
 
